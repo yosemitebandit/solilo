@@ -14,7 +14,21 @@ SAVE_DIR = 'saved-notes'
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+  # First get the filepaths ordered.
+  ordered_filepaths = []
+  for filename in os.listdir(SAVE_DIR):
+    ordered_filepaths.append(os.path.join(SAVE_DIR, filename))
+  ordered_filepaths = sorted(ordered_filepaths, reverse=True)
+  # Read each file.
+  notes = []
+  for filepath in ordered_filepaths:
+    with open(filepath) as savefile:
+      contents = savefile.read()
+    notes.append({
+      'filename': os.path.basename(filepath),
+      'contents': contents,
+    })
+  return render_template('index.html', notes=notes)
 
 
 @app.route('/write')

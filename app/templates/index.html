@@ -2,4 +2,10 @@
 
 
 {% block main %}
+
+{% for note in notes %}
+  <h4>{{ note['filename'] }}</h4>
+  <p>{{ note['contents'] }}</p>
+{% endfor %}
+
 {% endblock %}
