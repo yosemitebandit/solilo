@@ -8,13 +8,15 @@
   </head>
 
   <body>
-    <p>
-      <a href='/'>read</a>
-      or
-      <a href='/write'>write</a>
-    </p>
+    <div class='header'>
+      <p>
+        <a href='/'>read</a>
+        or
+        <a href='/write'>write</a>
+      </p>
+    </div>
 
-    {% block body %}
+    {% block main %}
     {% endblock %}
   </body>
 </html>
