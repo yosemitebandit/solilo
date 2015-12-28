@@ -34,10 +34,5 @@ def save():
   return ''
 
 
-@app.route('/read')
-def read():
-  return render_template('read.html')
-
-
 if __name__ == '__main__':
   app.run(debug=True)
