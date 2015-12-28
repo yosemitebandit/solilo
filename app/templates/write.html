@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+<style>
+  #container {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+  }
+  #writing {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+  }
+  #mask {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    background-color: #224466;
+  }
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+
+<div id='container'>
+  <form>
+    <textarea id='writing'></textarea>
+  </form>
+
+  <div id='mask'>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+  function periodicSave() {
+    var data = {
+      text: $('#writing').val(),
+    };
+    $.post('/save', data, function(response) {
+      console.log(response);
+    });
+  }
+
+  $(function() {
+    $('#writing').focus();
+
+    $(document).click(function() {
+      $('#writing').focus();
+    });
+
+    // Wait for keyup on the textarea..
+    // If, after two seconds, there has been no additional typing, save the text.
+    var saveTimeout;
+    $('#writing').keyup(function(e) {
+      // If this was an alt-tab, don't save.
+      if (e.which == 91) {
+        return
+      }
+      window.clearTimeout(saveTimeout);
+      saveTimeout = window.setTimeout(periodicSave, 2000);
+    });
+  });
+</script>
+
+{% endblock %}
